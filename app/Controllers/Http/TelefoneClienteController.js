@@ -1,18 +1,18 @@
 "use strict";
 
-const Cliente = use("App/Models/Cliente");
+const Telefone = use("App/Models/TelefoneCliente");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with clientes
+ * Resourceful controller for interacting with telefoneclientes
  */
-class ClienteController {
+class TelefoneClienteController {
   /**
-   * Show a list of all clientes.
-   * GET clientes
+   * Show a list of all telefoneclientes.
+   * GET telefoneclientes
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -20,35 +20,28 @@ class ClienteController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    const clientes = await Cliente.query().with("telefone").fetch();
-    return clientes;
+    const telefones = await Telefone.query().with("cliente").fetch();
+    return telefones;
   }
 
   /**
-   * Create/save a new cliente.
-   * POST clientes
+   * Create/save a new telefonecliente.
+   * POST telefoneclientes
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-    const data = request.only([
-      "cpf_cnpj",
-      "nome",
-      "rua",
-      "numero",
-      "bairro",
-      "cidade"
-    ]);
-    const cliente = await Cliente.create({ ...data });
+    const data = request.only(["cliente_id","telefone"]);
+    const telefone = await Telefone.create({ ...data });
 
-    return cliente;
+    return telefone;
   }
 
   /**
-   * Display a single cliente.
-   * GET clientes/:id
+   * Display a single telefonecliente.
+   * GET telefoneclientes/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -56,13 +49,13 @@ class ClienteController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
-    const cliente = await Cliente.findOrFail(params.id);
-    return cliente;
+    const telefone = await Telefone.findOrFail(params.id);
+    return telefone;
   }
 
   /**
-   * Update cliente details.
-   * PUT or PATCH clientes/:id
+   * Update telefonecliente details.
+   * PUT or PATCH telefoneclientes/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -71,17 +64,17 @@ class ClienteController {
   async update({ params, request, response }) {}
 
   /**
-   * Delete a cliente with id.
-   * DELETE clientes/:id
+   * Delete a telefonecliente with id.
+   * DELETE telefoneclientes/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
-    const cliente = await Cliente.findOrFail(params.id);
-    await cliente.delete();
+    const telefone = await Telefone.findOrFail(params.id);
+    await telefone.delete();
   }
 }
 
-module.exports = ClienteController;
+module.exports = TelefoneClienteController;

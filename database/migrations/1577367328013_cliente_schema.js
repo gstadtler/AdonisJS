@@ -7,7 +7,7 @@ class ClienteSchema extends Schema {
   up() {
     this.create("clientes", table => {
       table.increments();
-      table.bigint("cpf_cnpj", 14).notNullable();
+      table.bigint("cpf_cnpj", 14).notNullable().unique();
       table.string("nome").notNullable();
       table.string("rua").notNullable();
       table.integer("numero").notNullable();

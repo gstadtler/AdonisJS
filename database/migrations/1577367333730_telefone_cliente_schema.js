@@ -14,7 +14,7 @@ class TelefoneClienteSchema extends Schema {
         .inTable("clientes")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.integer("telefone", 11).notNullable();
+      table.bigint("telefone", 11).notNullable();
       table.timestamps();
     });
   }
